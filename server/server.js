@@ -15,9 +15,31 @@ app.use(express.static(publicPath)); //set a static public path
 io.on('connection', (socket)=>{
 	console.log('New user connected');
 
+	/*socket.emit('newEmail', {
+		from:'rene@example.com',
+		text:'whats going on.',
+		createAt:123
+	});*/
+
+	socket.emit('newMessage',{
+		from:"Sever",
+		text:"Welcome to chat Application",
+		createdAt: new Date().getTime()
+	})
+
+	/*socket.on('createEmail', (newEmail)=>{
+		console.log('createEmail', newEmail);
+	});*/
+
+	socket.on('createMessage', function(msg){
+		var createdAt = new Date().getTime();
+		msg.createdAt = createdAt;
+		console.log('Message from client', msg);
+	});
+
 	socket.on('disconnect',()=>{
 		console.log('user has disconnected');
-	})
+	});
 });
 
 
