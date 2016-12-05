@@ -22,10 +22,10 @@ io.on('connection', (socket)=>{
 
 	socket.broadcast.emit('newMessage',generateMessage("Admin", "A New user joined the chat"));
 
-	socket.on('createMessage', function(msg){
-		
+	socket.on('createMessage', function(msg, callback){
+		console.log('createMessage', msg);
 		io.emit('newMessage', generateMessage(msg.from, msg.text));
-
+		callback('Message from the server');
 		/*socket.broadcast.emit('newMessage',{ // socket.broadcast.emit - envia para todo mundo menos o próprio usuário quem enviou
 			from:msg.from,
 			text:msg.text,
